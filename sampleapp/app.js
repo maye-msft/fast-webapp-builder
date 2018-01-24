@@ -1,7 +1,5 @@
 const server = require("../")
-
 const path = require("path")
-
 server({
     'databaseURI':'mongodb://localhost:27017/test',
     'port':3001,

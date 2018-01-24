@@ -11,7 +11,7 @@ function server(config, cb) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use('/public', express.static(__dirname +'/web'))
-    app.use('/node_modules', express.static(__dirname +'/node_modules'))
+    app.use('/node_modules', express.static('./node_modules'))
 
     let auth = null;
 

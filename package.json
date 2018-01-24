@@ -1,6 +1,6 @@
 {
   "name": "fast-webapp-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a quick way to build web app in nodejs and mongodb/cosmosdb",
   "main": "index.js",
   "scripts": {
