@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <link href="/node_modules/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+    <div id="app">
+
+        <v-app id="inspire" blue>
+            <v-navigation-drawer clipped fixed v-model="drawer" app>
+                <v-list dense v-for="(menu, idx) in menus">
+
+                    <v-list-tile @click="router.push({ path: menu.path })">
+                        <v-list-tile-action>
+                            <v-icon>settings</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{menu.title}}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+
+                </v-list>
+            </v-navigation-drawer>
+            <v-toolbar app fixed clipped-left>
+                <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+                <v-toolbar-title>App</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon v-if="auth===true && signinas==null" @click=" router.push({ name: 'signin' })">
+                    <v-icon>account_box</v-icon>
+                </v-btn>
+                <a v-if="auth===true && signinas!=null" @click="store.commit('setToken', null)">Sign Out as {{signinas.username}}</a>
+            </v-toolbar>
+            <v-content>
+                <v-container fluid>
+                    <template v-if="errors.length>0">
+                    <h3>Error Message</h3>
+                    <v-btn @click="store.commit('clearError')"  >Clear</v-btn>
+                    <v-list >
+                        <template v-for="(item, index) in errors">
+                            <v-list-tile  :key="item">
+                                <v-list-tile-content>
+                                    <v-list-tile-title>{{ item.message }}; {{ item.response.data.message }} at {{ item.ts }}</v-list-tile-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action>
+                                        <v-icon>error</v-icon>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                            <v-divider v-if="index + 1 < errors.length" :key="item"></v-divider>
+                        </template>
+                    </v-list>
+                    <hr/>
+                    </template>
+                    <router-view></router-view>
+                </v-container>
+            </v-content>
+            <v-footer app fixed>
+                <span>&copy; 2017</span>
+            </v-footer>
+        </v-app>
+
+
+    </div>
+    <script src="/node_modules/vue/dist/vue.min.js"></script>
+    <script src="/node_modules/vuex/dist/vuex.min.js"></script>
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
+    <script src="/node_modules/vue-router/dist/vue-router.min.js"></script>
+    <script src="/node_modules/babel-standalone/babel.min.js"></script>
+    <script src="/node_modules/vuetify/dist/vuetify.js"></script>
+    <script type="text/babel" src="./store.js"></script>
+    <script type="text/babel" src="./model2comp.js"></script>
+    <script type="text/babel" src="/modelmeta"></script>
+    <script type="text/babel" src="./signin.js"></script>
+    <script type="text/babel" src="./signup.js"></script>
+
+    <script type="text/babel">
+
+
+            Vue.component("hello", {
+                template: `<h1>Welcome</h1>`
+            });
+            const routes = [
+                { name: "hello", path: '/hello', component: { template: '<hello></hello>' } },
+            ];
+
+            if(auth) {
+                routes.push({ name: "signin", path: '/signin', component: { template: '<signin-view></signin-view>' } });
+                routes.push({ name: "signup", path: '/signup', component: { template: '<signup-view></signup-view>' } });
+            }
+            const menus = []
+
+
+            for(let model of models) {
+                model2view(model, routes, menus)
+                window.Schema = window.Schema || {};
+                window.Schema[model.name] = model
+            }
+
+            const router = new VueRouter({
+                routes: routes
+            })
+
+
+            const vm = new Vue({
+                    el: '#app',
+                    store:store,
+                    router: router,
+                    data: () => ({
+                        drawer: null,
+                        menus: menus,
+                        auth:auth
+                    }),
+                    props: {
+                        // source: String
+                    },
+                    mounted: function () {
+                        router.push({ name: 'hello' })
+                    },
+                    computed:{
+                        signinas:function() {
+                            return store.state.token
+                        },
+                        errors:function() {
+                            return store.state.errors
+                        }
+                    }
+                })
+
+
+
+            
+
+    </script>
+
+</body>
+
+</html>

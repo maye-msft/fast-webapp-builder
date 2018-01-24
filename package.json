@@ -1,0 +1,40 @@
+{
+  "name": "fast-webapp-builder",
+  "version": "1.0.0",
+  "description": "a quick way to build web app in nodejs and mongodb/cosmosdb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sampleapp": "node sampleapp/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MS-CSE-GCR/fast-webapp-builder.git"
+  },
+  "keywords": [
+    "nodejs",
+    "cosmosdb",
+    "mongodb"
+  ],
+  "author": "ye.ma@microsoft.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MS-CSE-GCR/fast-webapp-builder/issues"
+  },
+  "homepage": "https://github.com/MS-CSE-GCR/fast-webapp-builder#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "babel-standalone": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "jwt-simple": "^0.5.1",
+    "method-override": "^2.3.10",
+    "mongoose": "^4.13.9",
+    "vue": "^2.5.3",
+    "vue-router": "^3.0.1",
+    "vuetify": "^0.17.6",
+    "vuex": "^3.0.1"
+  }
+}
