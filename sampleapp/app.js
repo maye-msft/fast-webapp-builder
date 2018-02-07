@@ -11,6 +11,8 @@ server({
         path.join(__dirname, 'a.model.js'),
         path.join(__dirname, 'b.model.js'),
         path.join(__dirname, 'c.model.js'),
-        path.join(__dirname, 'd.model.js')
+        path.join(__dirname, 'd.model.js'),
+        path.join(__dirname, 'e.model.js')
+
     ]
 })

@@ -87,7 +87,11 @@ function server(config, cb) {
     app.use('/api', router);
 
     function next() {
-        app.listen(config.port || 3000, () => console.log('app listening on port 3000!'))
+        app.listen(config.port || 3000, () => {
+                console.log(`app listening on port ${config.port || 3000}!`)
+                console.log(`http://localhost:${config.port || 3000}/public/index.html`)
+            }
+        )
     }
     if(cb)
         cb(models, dbhelper, next);

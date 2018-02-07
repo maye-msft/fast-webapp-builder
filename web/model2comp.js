@@ -10,6 +10,7 @@ function model2view(model, rountes, menus) {
     let dataobj = {};
     let dataitems = {};
     let datafill = {};
+    let dataconv = {};
     const modelName = model.name;
     const isRequired = function (required) {
         return required ? '' : 'required';
@@ -77,6 +78,10 @@ function model2view(model, rountes, menus) {
                             ${isRequired(props.required)}
                             type="date"
                         ></v-text-field>`);
+                    dataconv[name] = function(data) {
+                        data[name] = data[name].replace('T00:00:00.000Z', '')
+
+                    }   
                 } else if (props.type === 'ObjectId' ) {
                     fields.push(`<v-select
                             v-bind:items="dataitems.${name}"
@@ -211,6 +216,12 @@ function model2view(model, rountes, menus) {
                     }
                 }).then(function (response) {
                     that.objs = response.data;
+                    for (let key in dataconv) {
+                        for(let obj of that.objs) {
+                            dataconv[key](obj)
+                        }
+                    }
+                    
                 }).catch(function (error) {
                     console.log(error)
                     store.commit('addError', error)
@@ -219,8 +230,6 @@ function model2view(model, rountes, menus) {
             gotoEditView(id) {
                 router.push({ name: `${modelName}-edit`, params:{id:id} })
             },
-
-
             gotoCreateView() {
                 router.push({ name: `${modelName}-create` })
             }
@@ -315,6 +324,9 @@ function model2view(model, rountes, menus) {
                     }
                 }).then(function (response) {
                     that.dataobj = response.data;
+                    for (let key in dataconv) {
+                        dataconv[key](that.dataobj)
+                    }
                 }).catch(function (error) {
                     console.log(error)
                     store.commit('addError', error)
