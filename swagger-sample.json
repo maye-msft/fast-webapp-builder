@@ -1,0 +1,203 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Pets API reference for developers",
+    "version": "1.0",
+    "title": "Pets API",
+    "termsOfService": "http://pets-demo.com"
+  },
+  "host": "pets-demo.azurewebsites.net",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "pet-controller",
+      "description": "Pet Controller"
+    }
+  ],
+  "paths": {
+    "/api/pets": {
+      "get": {
+        "tags": [
+          "pet-controller"
+        ],
+        "summary": "getAllPets",
+        "operationId": "getAllPetsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Iterable«Pet»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "pet-controller"
+        ],
+        "summary": "createPet",
+        "operationId": "createPetUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "pet",
+            "description": "pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/pets/{id}": {
+      "get": {
+        "tags": [
+          "pet-controller"
+        ],
+        "summary": "getPet",
+        "operationId": "getPetUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Optional«Pet»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "pet-controller"
+        ],
+        "summary": "deletePet",
+        "operationId": "deletePetUsingDELETE",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Iterable«Pet»": {
+      "type": "object",
+      "title": "Iterable«Pet»"
+    },
+    "Optional«Pet»": {
+      "type": "object",
+      "properties": {
+        "present": {
+          "type": "boolean"
+        }
+      },
+      "title": "Optional«Pet»"
+    },
+    "Pet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "species": {
+          "type": "string"
+        }
+      },
+      "title": "Pet"
+    }
+  }
+}

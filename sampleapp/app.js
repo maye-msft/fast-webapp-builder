@@ -1,6 +1,11 @@
 const server = require("../")
 const path = require("path")
 server({
+    
+    "description": "sample app",
+    "version": "1.0",
+    "title": "sample-app",
+
     'databaseURI':'mongodb://localhost:27017/test',
     'port':3001,
     'secret': 'thisIsTopSecret',

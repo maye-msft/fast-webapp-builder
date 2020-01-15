@@ -1,0 +1,19 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "",
+      "version": "1.0",
+      "title": "",
+      "termsOfService": ""
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/",
+    "tags": [
+    ],
+    "paths": {
+
+    },
+    "definitions": {
+
+    }
+}

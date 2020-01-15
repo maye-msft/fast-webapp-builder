@@ -25,16 +25,20 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-standalone": "^6.26.0",
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "jwt-simple": "^0.5.1",
     "method-override": "^2.3.10",
     "mongoose": "^4.13.9",
+    "mongoose-jsonschema": "^0.3.0",
+    "mongoose-schema-jsonschema": "^1.2.1",
+    "swagger-ui-express": "^4.1.2",
     "vue": "^2.5.3",
     "vue-router": "^3.0.1",
     "vuetify": "^0.17.6",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yamljs": "^0.3.0"
   }
 }

@@ -11,16 +11,30 @@ function server(config, cb) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use('/public', express.static(__dirname +'/web'))
-    app.use('/node_modules', express.static('./node_modules'))
+    app.use('/node_modules', express.static('../node_modules'))
 
+    const swaggerUi = require('swagger-ui-express');
+    const swaggerDocument = require('./swagger.json');
+    
+    app.use('/api-docs', function(req, res, next){
+        swaggerDocument.info={
+            "description": config.description,
+            "version": config.version,
+            "title": config.title,
+        }
+        swaggerDocument.host = req.get('host');
+        req.swaggerDoc = swaggerDocument;
+        next();
+    }, swaggerUi.serve, swaggerUi.setup());
+    
     let auth = null;
 
     if(config.auth) {
         const authfunc = require("./auth/auth.js")
         const usermodel = require("./auth/user.model.js")
         const rolemodel = require("./auth/role.model.js")
-        const User = model2api(usermodel, router, mongoose, auth)
-        const Role = model2api(rolemodel, router, mongoose, auth)
+        const User = model2api(usermodel, router, mongoose, auth, swaggerDocument)
+        const Role = model2api(rolemodel, router, mongoose, auth, swaggerDocument)
 
         auth = authfunc({secret:config.secret, dayForTokenExpiration:config.dayForTokenExpiration}, User)
         if(config.role && config.role.length>0) {
@@ -72,7 +86,7 @@ function server(config, cb) {
     const dbhelper = {};
     for(let modelpath of config.models) {
         const model = require(modelpath)
-        dbhelper[model.name] = model2api(model, router, mongoose, auth)
+        dbhelper[model.name] = model2api(model, router, mongoose, auth, swaggerDocument)
         models.push(model);
     }
 
@@ -90,6 +104,7 @@ function server(config, cb) {
         app.listen(config.port || 3000, () => {
                 console.log(`app listening on port ${config.port || 3000}!`)
                 console.log(`http://localhost:${config.port || 3000}/public/index.html`)
+                console.log(`http://localhost:${config.port || 3000}/api-docs`)
             }
         )
     }
